@@ -34,3 +34,61 @@ I need to do some further research on the following topics:
 
 * Closures in JS
 * Classes in JS - the defineProperty method does not work when it is defined inside a class. I'd like to find out if there is a way of accessing these methods inside JS classes.
+
+Examples from StackOverflow:
+
+With a class:
+```
+class Person {
+
+    get name() {
+        return this._name + '!!!'
+    }
+
+    set name(newValue) {
+        this._name = newValue
+    }
+
+    constructor(name) {
+        this._name = name
+    }
+}
+
+const me = new Person('Zach')
+console.log(me.name)            // Zach!!!
+
+me.name = 'Jacob'
+console.log(me.name)            // Jacob!!!
+
+// Of course, _name is not actually private.
+console.log(me._name)           // Jacob
+
+```
+
+
+With a Object.defineProperty:
+
+```
+var MyClass = function() {
+    this._a = undefined;
+    this._b = undefined;
+};
+
+Object.defineProperties(MyClass.prototype, {
+    //Create a read-only property
+    a : {
+        get : function() {
+            return this._a;
+        }
+    },
+    //Create a simple read-write property
+    b : {
+        get : function() {
+            return this._b;
+        },
+        set : function(value) {
+            this._b = value;
+        }
+    }
+});
+```
